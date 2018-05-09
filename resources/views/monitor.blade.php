@@ -59,12 +59,35 @@
                 data: {
                     labels: data.dates[code],
                     datasets: [{
-                        label: data.names[code],
-                        borderColor: '#666',
-                        backgroundColor: '#666',
-                        data: data.data[code],
+                        label: '开盘',
+                        borderColor: '#FF9999',
+                        backgroundColor: '#FF9999',
+                        data: data.open[code],
+                        fill: false,
+                    }, {
+                        label: '收盘',
+                        borderColor: '#FF0033',
+                        backgroundColor: '#FF0033',
+                        data: data.close[code],
+                        fill: false,
+                    }, {
+                        label: '最高',
+                        borderColor: '#009966',
+                        backgroundColor: '#009966',
+                        data: data.high[code],
+                        fill: false,
+                    }, {
+                        label: '最低',
+                        borderColor: '#99CCCC',
+                        backgroundColor: '#99CCCC',
+                        data: data.low[code],
                         fill: false,
                     }]
+                }, options: {
+                    title: {
+                        display: true,
+                        text: data.names[code],
+                    }
                 }
             };
         }

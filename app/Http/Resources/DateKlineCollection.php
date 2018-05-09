@@ -19,7 +19,10 @@ class DateKlineCollection extends ResourceCollection
             return $item->map->only(['date', 'open', 'close', 'high', 'low', 'volume']);
         });
         return [
-            'data' => $this->collection->map->pluck('close'),
+            'open' => $this->collection->map->pluck('open'),
+            'close' => $this->collection->map->pluck('close'),
+            'high' => $this->collection->map->pluck('high'),
+            'low' => $this->collection->map->pluck('low'),
             'names' => BaseInfo::whereIn('code', $this->collection->keys())->pluck('name', 'code'),
             'dates' => $this->collection->map->pluck('date'),
         ];
