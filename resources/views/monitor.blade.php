@@ -62,21 +62,21 @@
                     datasets: [{
                         label: '开盘',
                         borderColor: '#F48FB1',
-                        backgroundColor: color('#F48FB1').alpha(0.1).rgbString(),
+                        backgroundColor: color('#F48FB1').alpha(0.2).rgbString(),
                         data: data.open[code],
                         fill: 1,
                         borderWidth: 2,
                     }, {
                         label: '收盘',
                         borderColor: '#B39DDB',
-                        backgroundColor: color('#B39DDB').alpha(0.1).rgbString(),
+                        backgroundColor: color('#B39DDB').alpha(0.2).rgbString(),
                         data: data.close[code],
                         fill: 2,
                         borderWidth: 2,
                     }, {
                         label: '最高',
                         borderColor: '#90CAF9',
-                        backgroundColor: color('#90CAF9').alpha(0.1).rgbString(),
+                        backgroundColor: color('#90CAF9').alpha(0.2).rgbString(),
                         data: data.high[code],
                         fill: 3,
                         borderWidth: 2,
@@ -84,7 +84,7 @@
                     }, {
                         label: '最低',
                         borderColor: '#C5E1A5',
-                        backgroundColor: color('#C5E1A5').alpha(1).rgbString(),
+                        backgroundColor: color('#C5E1A5').alpha(0.2).rgbString(),
                         data: data.low[code],
                         fill: 4,
                         borderWidth: 2,
