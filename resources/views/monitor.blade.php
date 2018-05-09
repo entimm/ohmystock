@@ -54,6 +54,7 @@
         $('#datepicker').datepicker({});
 
         function createConfig(code, data) {
+            var color = Chart.helpers.color;
             return {
                 type: 'line',
                 data: {
@@ -61,31 +62,31 @@
                     datasets: [{
                         label: '开盘',
                         borderColor: '#F48FB1',
-                        backgroundColor: '#F48FB1',
+                        backgroundColor: color('#F48FB1').alpha(0.1).rgbString(),
                         data: data.open[code],
-                        fill: false,
+                        fill: true,
                         borderWidth: 2,
                     }, {
                         label: '收盘',
                         borderColor: '#B39DDB',
-                        backgroundColor: '#B39DDB',
+                        backgroundColor: color('#B39DDB').alpha(0.1).rgbString(),
                         data: data.close[code],
-                        fill: false,
+                        fill: true,
                         borderWidth: 2,
                     }, {
                         label: '最高',
                         borderColor: '#90CAF9',
-                        backgroundColor: '#90CAF9',
+                        backgroundColor: color('#90CAF9').alpha(0.1).rgbString(),
                         data: data.high[code],
-                        fill: false,
+                        fill: true,
                         borderWidth: 2,
                         borderDash: [4, 2],
                     }, {
                         label: '最低',
                         borderColor: '#C5E1A5',
-                        backgroundColor: '#C5E1A5',
+                        backgroundColor: color('#C5E1A5').alpha(0.1).rgbString(),
                         data: data.low[code],
-                        fill: false,
+                        fill: true,
                         borderWidth: 2,
                         borderDash: [4, 2],
                     }]
@@ -101,7 +102,7 @@
                     hover: {
                         mode: 'index'
                     },
-                }
+                },
             };
         }
 
