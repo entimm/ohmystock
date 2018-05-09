@@ -60,34 +60,47 @@
                     labels: data.dates[code],
                     datasets: [{
                         label: '开盘',
-                        borderColor: '#FF9999',
-                        backgroundColor: '#FF9999',
+                        borderColor: '#F48FB1',
+                        backgroundColor: '#F48FB1',
                         data: data.open[code],
                         fill: false,
+                        borderWidth: 2,
                     }, {
                         label: '收盘',
-                        borderColor: '#FF0033',
-                        backgroundColor: '#FF0033',
+                        borderColor: '#B39DDB',
+                        backgroundColor: '#B39DDB',
                         data: data.close[code],
                         fill: false,
+                        borderWidth: 2,
                     }, {
                         label: '最高',
-                        borderColor: '#009966',
-                        backgroundColor: '#009966',
+                        borderColor: '#90CAF9',
+                        backgroundColor: '#90CAF9',
                         data: data.high[code],
                         fill: false,
+                        borderWidth: 2,
+                        borderDash: [4, 2],
                     }, {
                         label: '最低',
-                        borderColor: '#99CCCC',
-                        backgroundColor: '#99CCCC',
+                        borderColor: '#C5E1A5',
+                        backgroundColor: '#C5E1A5',
                         data: data.low[code],
                         fill: false,
+                        borderWidth: 2,
+                        borderDash: [4, 2],
                     }]
                 }, options: {
+                    responsive: true,
                     title: {
                         display: true,
                         text: data.names[code],
-                    }
+                    },
+                    tooltips: {
+                        mode: 'index',
+                    },
+                    hover: {
+                        mode: 'index'
+                    },
                 }
             };
         }
