@@ -42,17 +42,17 @@ class GetDateKlines extends Command
      */
     public function handle()
     {
-        $codes = Monitor::where(['going' => true])->pluck('code');
+        $arr = Monitor::where(['going' => true])->pluck('start', 'code')->all();
 
         $last_dates = DateKline::select(['code', DB::raw('max(date) last_date')])
-            ->whereIn('code', $codes)
+            ->whereIn('code', array_keys($arr))
             ->groupBy('code')
             ->get()
             ->pluck('last_date', 'code')
             ->toArray();
 
-        foreach ($codes as $code) {
-            $start = isset($last_dates[$code]) ? $last_dates[$code] : Carbon::now()->subDays(20);
+        foreach ($arr as $code =>$start) {
+            $start = isset($last_dates[$code]) ? $last_dates[$code] : $start;
             $process = new Process(['python3', './python/get_k_data.py', $code, $start]);
             $process->mustRun();
 

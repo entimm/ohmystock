@@ -20,7 +20,8 @@ class ApiController extends Controller
 
         $collect = collect();
         foreach ($monitors as $item) {
-            $collect = $collect->merge(DateKline::where(['code' => $item->code])->where('date', '>=', $item->start)->get());
+            $one = DateKline::where(['code' => $item->code])->where('date', '>=', $item->start)->latest('date')->take(40)->get()->reverse()->all();
+            $collect = $collect->merge($one);
         }
 
         return new DateKlineCollection($collect);

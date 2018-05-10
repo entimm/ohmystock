@@ -51,13 +51,11 @@ Route::get('/daily_list', function (Request $request) {
 });
 
 Route::get('/add', function (Request $request) {
-    $param['group'] = $request->group;
-    $param['date'] = $request->date;
-    return view('add', compact('param'));
+    return view('add');
 });
 
 Route::post('/store', function (Request $request) {
-    $codes = preg_split('/[,\s]/', $request->codes);
+    $codes = array_filter(preg_split('/[,\s]/', $request->codes));
     foreach ($codes as $code) {
         Monitor::firstOrCreate(['code' => $code, 'group' => $request->group], ['start' => $request->start ?: date('Y-m-d')]);
     }

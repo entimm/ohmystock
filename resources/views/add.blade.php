@@ -23,13 +23,17 @@
     </div>
     
     <div class="form-label-group">
-        <input type="text" class="form-control" name="start" value="{{date('Y-m-d')}}">
+        <select class="form-control" name="start">
+          <option value="{{date('Y-m-d')}}">{{date('Y-m-d')}}</option>
+          <option value="{{date('Y-m-01')}}">{{date('Y-m-01')}}</option>
+          <option value="{{date('Y-01-01')}}">{{date('Y-01-01')}}</option>
+        </select>
     </div>
 
     <div class="form-label-group">
         <select class="form-control" name="group" required autofocus>
             @foreach (config('stock.groups') as $k => $value)
-                <option value="{{ $k }}" {{$k == $param['group'] ? 'selected' : ''}} >{{ $value }}</option>
+                <option value="{{ $k }}">{{ $value }}</option>
             @endforeach
         </select>
     </div>
