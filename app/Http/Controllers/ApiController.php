@@ -10,10 +10,11 @@ use App\Http\Resources\DateKlineCollection;
 
 class ApiController extends Controller
 {
-    public function dateKline(Request $request)
+    public function dateKlines(Request $request)
     {
         $monitors = Monitor::where(['group' => $request->group ?: 0])
-            ->when($request->group == 1 && $request->date, function($query) use ($request) {
+            ->where(['going' => true])
+            ->when(in_array($request->group, config('stock.dayli_groups')) && $request->date, function($query) use ($request) {
                 return $query->where(['start' => $request->group]);
             })->get();
 
@@ -23,5 +24,12 @@ class ApiController extends Controller
         }
 
         return new DateKlineCollection($collect);
+    }
+
+    public function remove(Request $request) {
+        $monitor = Monitor::find($request->id);
+        $monitor->end = date('Y-m-d');
+        $monitor->going = false;
+        $monitor->save();
     }
 }

@@ -17,4 +17,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('api')->get('/date_kline', 'ApiController@dateKline');
+Route::middleware('api')->get('/date_klines', 'ApiController@dateKlines');
+
+Route::middleware('api')->post('/remove', 'ApiController@remove');

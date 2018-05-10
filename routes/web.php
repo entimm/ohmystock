@@ -11,8 +11,9 @@
 |
 */
 
-use Symfony\Component\Process\Process;
+use App\Models\Monitor;
 use Illuminate\Http\Request;
+use Symfony\Component\Process\Process;
 
 Route::get('/', function () {
     return view('welcome');
@@ -22,6 +23,45 @@ Route::get('/monitor', function (Request $request) {
     $param['group'] = $request->group;
     $param['date'] = $request->date;
     return view('monitor', compact('param'));
+});
+
+Route::get('/list', function (Request $request) {
+    $monitors = Monitor::where(['going' => true])
+        ->whereNotIn('group', config('stock.dayli_groups'))
+        ->join('base_infos', 'monitors.code', '=', 'base_infos.code')
+        ->select('name', 'monitors.*')
+        ->orderBy('start')->get()->groupBy('group')
+        ->all();
+
+    $param['group'] = $request->group;
+    $param['date'] = $request->date;
+    return view('list', compact('param', 'monitors'));
+});
+
+Route::get('/daily_list', function (Request $request) {
+    $monitors = Monitor::where(['going' => true])
+        ->where(['group' => isset($request->group) ? $request->group : 1])
+        ->join('base_infos', 'monitors.code', '=', 'base_infos.code')
+        ->select('name', 'monitors.*')
+        ->orderBy('start')->get()->groupBy('start')
+        ->all();
+    $param['group'] = $request->group;
+    $param['date'] = $request->date;
+    return view('daily_list', compact('param', 'monitors'));
+});
+
+Route::get('/add', function (Request $request) {
+    $param['group'] = $request->group;
+    $param['date'] = $request->date;
+    return view('add', compact('param'));
+});
+
+Route::post('/store', function (Request $request) {
+    $codes = explode(',', $request->codes);
+    foreach ($codes as $code) {
+        Monitor::firstOrCreate(['code' => $code, 'group' => $request->group], ['start' => date('Y-m-d')]);
+    }
+    return redirect('list');
 });
 
 Route::get('/chartjs', function () {
