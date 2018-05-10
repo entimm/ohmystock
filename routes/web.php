@@ -57,7 +57,7 @@ Route::get('/add', function (Request $request) {
 });
 
 Route::post('/store', function (Request $request) {
-    $codes = explode(',', $request->codes);
+    $codes = preg_split('/[,\s]/', $request->codes);
     foreach ($codes as $code) {
         Monitor::firstOrCreate(['code' => $code, 'group' => $request->group], ['start' => $request->start ?: date('Y-m-d')]);
     }

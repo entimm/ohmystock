@@ -47,7 +47,10 @@
         color: #fff;
     }
 
-    .grid-item { width: 30%; }
+    .grid-item { 
+        width: 33%;
+        min-width: 350px;
+    }
 </style>
 @endpush
 
