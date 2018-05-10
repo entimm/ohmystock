@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\Process\Process;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('monitor');
 });
 
 Route::get('/monitor', function (Request $request) {
