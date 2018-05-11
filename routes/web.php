@@ -62,10 +62,6 @@ Route::post('/store', function (Request $request) {
     return redirect('list');
 });
 
-Route::get('/chartjs', function () {
-    return view('chartjs');
-});
-
 Route::get('/get_k_data', function () {
     $process = new Process(['python3', '../python/get_k_data.py', '000725']);
     $process->mustRun();
