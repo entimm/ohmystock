@@ -9,8 +9,9 @@ use App\Http\Controllers\Controller;
 
 class DataController extends Controller
 {
-    public function realtime_price($codes)
+    public function realtime_price($codes = '')
     {
+        $codes = $codes ?: 'sh000001,sz399006,sz399001,sh000016,sz399007';
         $columns = [
             'name' => '股票名字',
             'open' => '今日开盘价',
@@ -47,6 +48,9 @@ class DataController extends Controller
         ];
 
         $codes = array_map(function($code) {
+            if (starts_with($code, 'sz') || starts_with($code, 'sh')) {
+                return $code;
+            }
             return (starts_with($code, '60') ? 'sh' : 'sz') . $code;
         }, explode(',', $codes));
         $content = (new Client)->get('http://hq.sinajs.cn/list=' . implode(',', $codes))->getBody();
@@ -54,6 +58,7 @@ class DataController extends Controller
         $collection = collect();
         foreach (array_filter(explode(PHP_EOL, $content)) as $line) {
             $line = explode('"', $line)[1];
+            if (! $line) continue;
             $values = explode(',', $line);
             array_pop($values);
             $arr = array_combine(array_keys($columns), $values);
