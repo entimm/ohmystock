@@ -11,18 +11,6 @@ class DataController extends Controller
 {
     public function realtime_price($codes)
     {
-        $statuses = [
-            '00' => '正常',
-            '01' => '临时停牌1H',
-            '02' => '停牌',
-            '03' => '停牌',
-            '04' => '临时停牌',
-            '05' => '停1/2',
-            '07' => '暂停',
-            '-1' => '无记录',
-            '-2' => '未上市',
-            '-3' => '退市',
-        ];
         $columns = [
             'name' => '股票名字',
             'open' => '今日开盘价',
@@ -56,7 +44,6 @@ class DataController extends Controller
             'sell5_price' => '卖五报价',
             'date' => '日期',
             'time' => '时间',
-            'status' => '状态',
         ];
 
         $codes = array_map(function($code) {
@@ -68,9 +55,10 @@ class DataController extends Controller
         foreach (array_filter(explode(PHP_EOL, $content)) as $line) {
             $line = explode('"', $line)[1];
             $values = explode(',', $line);
-            $values[count($values) - 1] = $statuses[$values[count($values) - 1]];
-            $arr = array_combine(array_values($columns), $values);
-            $collection->push($arr);
+            array_pop($values);
+            $arr = array_combine(array_keys($columns), $values);
+            $arr['percent'] = number_format(($arr['price']/$arr['last_close'] - 1) * 100, 2);
+            $collection->push(collect($arr)->only('name', 'price', 'percent', 'time'));
         }
         return $collection;
     }
