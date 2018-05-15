@@ -18,7 +18,7 @@ Artisan::command('inspire', function () {
 })->describe('Display an inspiring quote');
 
 Artisan::command('get_realtime_price {codes?*}', function () {
-    $columns = ['name', 'open', 'preclose', 'price', 'high', 'low', 'total_volume', 'total_amount', 'date', 'time',];
+    $columns = ['name', 'open', 'preclose', 'price', 'high', 'low', 'total_volume', 'total_amount', 'date', 'time','percent'];
     $codes = $this->argument('codes');
     $collection = realtime_price($codes);
     $this->table($columns, $collection->map->only($columns));
