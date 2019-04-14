@@ -16,7 +16,7 @@ Route::get('/monitor', 'MonitorController@charts');
 Route::get('/list', 'MonitorController@list');
 Route::get('/daily_list', 'MonitorController@daily_list');
 Route::get('/add', 'MonitorController@add');
-Route::post('/store', 'MonitorController@add');
+Route::post('/store', 'MonitorController@store');
 
 Route::get('/get_realtime_price/{codes?}', 'DataController@realtime_price');
 
