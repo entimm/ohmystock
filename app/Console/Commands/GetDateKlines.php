@@ -52,7 +52,7 @@ class GetDateKlines extends Command
             ->toArray();
 
         foreach ($arr as $code =>$start) {
-            $start = isset($last_dates[$code]) ? $last_dates[$code] : $start;
+            $start = $last_dates[$code] ?? $start;
             $process = new Process(['python3', './python/get_k_data.py', $code, $start]);
             $process->mustRun();
 
