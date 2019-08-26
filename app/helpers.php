@@ -54,7 +54,7 @@ if (! function_exists('realtime_price')) {
             $line = explode('"', $line)[1];
             if (! $line) continue;
             $values = explode(',', $line);
-            array_pop($values);
+            $values = array_slice($values, 0, 32);
             $arr = array_combine(array_keys($columns), $values);
             $arr['percent'] = number_format(($arr['price']/$arr['preclose'] - 1) * 100, 2);
             $collection->push(collect($arr));
