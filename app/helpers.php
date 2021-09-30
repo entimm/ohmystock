@@ -5,7 +5,7 @@ use GuzzleHttp\Client;
 if (! function_exists('realtime_price')) {
     function realtime_price($codes = [])
     {
-        $codes = $codes ?: ['sh000001', 'sz399006', 'sz399001', 'sh000016', 'sz399007', 'sz399005'];
+        $codes = $codes ?: config('stock.real_time');
         $columns = [
             'name' => '股票名字',
             'open' => '今日开盘价',
@@ -57,6 +57,8 @@ if (! function_exists('realtime_price')) {
             $values = array_slice($values, 0, 32);
             $arr = array_combine(array_keys($columns), $values);
             $arr['percent'] = number_format(($arr['price']/$arr['preclose'] - 1) * 100, 2);
+            $arr['change'] = number_format($arr['price'] - $arr['preclose'], 2);
+            $arr['mood'] = $arr['percent'] >= 0 ? '⬆' : '⬇';
             $collection->push(collect($arr));
         }
         return $collection;
